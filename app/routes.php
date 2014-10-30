@@ -12,4 +12,4 @@
 */
 
 Route::get('order', array('uses' => 'PizzaController@getOrder'));
-Route::post('order', array('uses' => 'PizzaController@postOrder'));
+Route::post('order', array('before' => 'csrf', 'uses' => 'PizzaController@postOrder'));

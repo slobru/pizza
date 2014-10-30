@@ -31,6 +31,7 @@
                         {{Session::get('alert')}}
                     @endif
                     <form role="form" method="POST" action="{{ URL::action('PizzaController@postOrder') }}">
+                        {{Form::token()}}
                         <h4>What toppings would you like on your pizza?</h4>
                         <div class="checkbox">
                             <label>
