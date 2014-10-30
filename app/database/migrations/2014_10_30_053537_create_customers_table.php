@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePizzaTable extends Migration {
+class CreateCustomersTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,13 +12,11 @@ class CreatePizzaTable extends Migration {
 	 */
 	public function up()
 	{
-        Schema::create('pizza', function($table)
+        Schema::create('customers', function($table)
         {
             $table->increments('id');
-            $table->integer('customer_id');
-            $table->boolean('topping1');
-            $table->boolean('topping2');
-            $table->boolean('topping3');
+            $table->string('name');
+            $table->string('email');
             $table->timestamps();
         });
 	}
@@ -30,7 +28,7 @@ class CreatePizzaTable extends Migration {
 	 */
 	public function down()
 	{
-        Schema::drop('pizza');
+        Schema::drop('customers');
 	}
 
 }

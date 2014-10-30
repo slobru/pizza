@@ -6,6 +6,17 @@ use Pizza\Customer\CustomerRepositoryInterface as Customer;
 class PizzaController extends BaseController {
 
     /**
+     * Repositories
+     */
+    protected $order;
+    protected $customer;
+
+    protected $order_rules = [
+        'name' => 'required|alpha_dash',
+        'email' => 'required|min:4|max:64|email|unique:customers,email',
+    ];
+
+    /**
      *
      *
      * @param Order $order
@@ -16,13 +27,6 @@ class PizzaController extends BaseController {
         $this->order = $order;
         $this->customer = $customer;
     }
-
-    protected $order_rules = [
-        'title' => 'required',
-        'content' => 'required',
-        'slug' => 'required|unique:posts',
-        'excerpt' => 'required',
-    ];
 
     /**
      * Ger request for order form
@@ -44,12 +48,10 @@ class PizzaController extends BaseController {
     {
         $input = [
             'name' => Input::get( 'name' ),
-            'address' => Input::get( 'address' ),
-            'city' => Input::get( 'city' ),
-            'postal_code' => Input::get( 'postal_code' ),
-            'topping1' => Input::get( 'topping1' ),
-            'topping2' => Input::get( 'topping2' ),
-            'topping3' => Input::get( 'topping3' ),
+            'email' => Input::get( 'email' ),
+            'topping1' => Input::get( 'topping1', 0),
+            'topping2' => Input::get( 'topping2', 0),
+            'topping3' => Input::get( 'topping3', 0),
         ];
 
         //Run input validation
@@ -58,18 +60,24 @@ class PizzaController extends BaseController {
         if ( $v->fails() ) {
             // Validation has failed
 
+            //render validation messages
+            $alert = Alert::renderValidationAlert($v->messages());
+
             //redirect to order page with old input
-            return Redirect::to('order')->with('alert', $v->messages())->withInput();
+            return Redirect::to('order')->with('alert', $alert)->withInput();
         }
         else {
             // Validation passed...store data
             //create customer
             $customer = $this->customer->setCustomer($input);
 
-            $order = $this->order->setOrder($customer->id);
+            //create order
+            $this->order->setOrder($customer->id, $input);
+
+            $alert = Alert::renderAlert('Your order has been processed. Thanks!');
 
             //redirect to login page
-            return Redirect::to( 'order')->with('alert', 'The post has been saved');
+            return Redirect::to( 'order')->with('alert', $alert);
 
         }
     }

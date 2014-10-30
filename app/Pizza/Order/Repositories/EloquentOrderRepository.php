@@ -18,14 +18,22 @@ class EloquentOrderRepository implements OrderRepositoryInterface {
 
     /**
      *
-     *
-     * @param null $limit
+     * Create new order in repository
+     * @param $customerID
+     * @param $input
      * @return obj
      */
-    public function setOrder($limit = NULL)
+    public function setOrder($customerID, $input)
     {
-        $posts = Post::with('user')->take($limit)->orderBy('id', 'DESC')->get();
+        $order = new Order;
 
-        return $posts;
+        $order->customer_id = $customerID;
+        $order->topping1 = $input['topping1'];
+        $order->topping2 = $input['topping2'];
+        $order->topping3 = $input['topping3'];
+
+        $order->save();
+
+        return $order;
     }
 }

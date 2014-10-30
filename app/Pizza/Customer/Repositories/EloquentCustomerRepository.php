@@ -19,14 +19,18 @@ class EloquentCustomerRepository implements CustomerRepositoryInterface {
     /**
      *
      *
-     * @param null $limit
+     * @param $input
      * @return obj
      */
-    public function setCustomer($limit = NULL)
+    public function setCustomer($input)
     {
-        $posts = Post::with('user')->take($limit)->orderBy('id', 'DESC')->get();
+        $customer = new Customer;
 
-        return $posts;
+        $customer->name = $input['name'];
+        $customer->email = $input['email'];
+        $customer->save();
+
+        return $customer;
     }
 
 }
