@@ -11,4 +11,5 @@
 |
 */
 
-Route::get('/', array('uses' => 'OrderController@getOrder'));
+Route::get('/', array('uses' => 'PizzaController@getOrder'));
+Route::post('/', array('uses' => 'PizzaController@postOrder'));

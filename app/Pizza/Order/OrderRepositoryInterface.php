@@ -16,6 +16,6 @@ interface OrderRepositoryInterface {
      * @param $input
      * @return
      */
-    public function createOrder($input);
+    public function setOrder($input);
 
 }

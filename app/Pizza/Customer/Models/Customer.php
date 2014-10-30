@@ -1,22 +1,22 @@
 <?php
 
-namespace Pizza\Order\Models;
+namespace Pizza\Customer\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Order extends Model  {
+class Customer extends Model  {
 
 	/**
 	 * The database table used by the model.
 	 *
 	 * @var string
 	 */
-	protected $table = 'order';
+	protected $table = 'customers';
 
 
-    public function customer()
+    public function orders()
     {
-        return $this->belongsTo('Pizza\Customer\Models\Customer');
+        return $this->hasMany('Pizza\Order\Models\Order');
     }
 
 }

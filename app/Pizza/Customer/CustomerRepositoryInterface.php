@@ -7,15 +7,15 @@
  */
 
 
-namespace Pizza\Order;
+namespace Pizza\Customer;
 
-interface OrderRepositoryInterface {
+interface CustomerRepositoryInterface {
 
     /**
      * Create new order in repository
      * @param $input
      * @return
      */
-    public function createOrder($input);
+    public function setCustomer($input);
 
 }
